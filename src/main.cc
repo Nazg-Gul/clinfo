@@ -22,7 +22,11 @@
 
 using std::vector;
 
-#define LOG(...) fprintf(stderr, __VA_ARGS__)
+#define LOG(...) \
+  do { \
+    fprintf(stderr, __VA_ARGS__); \
+    fflush(stderr); \
+  } while (false)
 #define opencl_assert(stmt) \
   do { \
     cl_int err = stmt; \
