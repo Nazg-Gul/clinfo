@@ -96,18 +96,19 @@ int main(int argc, char **argv) {
                                     NULL));
     printf("Platform name is: %s\n", pname);
 
-    cl_device_type device_type;
-    LOG("Getting device type...\n");
-    opencl_assert(clGetDeviceInfo(device_ids[platform],
-                                  CL_DEVICE_TYPE,
-                                  sizeof(cl_device_type),
-                                  &device_type,
-                                  NULL));
-    LOG("Device type is: %lu\n", device_type);
-
     LOG("Getting info for each of the devices...\n");
     for (cl_uint num = 0; num < num_devices; ++num) {
       cl_device_id device_id = device_ids[num];
+
+      cl_device_type device_type;
+      LOG("Getting device type...\n");
+      opencl_assert(clGetDeviceInfo(device_ids[platform],
+                                    CL_DEVICE_TYPE,
+                                    sizeof(cl_device_type),
+                                    &device_type,
+                                    NULL));
+      LOG("Device type is: %lu\n", device_type);
+
       char name[1024] = "\0";
       LOG("Getting device %d name...\n", num);
       opencl_assert(clGetDeviceInfo(device_id,
