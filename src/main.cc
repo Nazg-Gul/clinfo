@@ -44,6 +44,14 @@ int main(int argc, char **argv) {
   }
   LOG("clew initialization success!\n");
 
+#define LOG_SYMBOL(sym) LOG("  " #sym ": %p\n", sym);
+  LOG("Symbol table:\n");
+  LOG_SYMBOL(clGetPlatformIDs)
+  LOG_SYMBOL(clGetDeviceIDs)
+  LOG_SYMBOL(clGetPlatformInfo)
+  LOG_SYMBOL(clGetDeviceInfo)
+#undef LOG_SYMBOL
+
   cl_uint num_platforms = 0;
 
   LOG("Getting number of platforms...\n");
@@ -92,7 +100,7 @@ int main(int argc, char **argv) {
     opencl_assert(clGetPlatformInfo(platform_ids[platform],
                                     CL_PLATFORM_NAME,
                                     sizeof(pname),
-                                    &pname,
+                                    pname,
                                     NULL));
     printf("Platform name is: %s\n", pname);
 
@@ -102,7 +110,7 @@ int main(int argc, char **argv) {
 
       cl_device_type device_type;
       LOG("Getting device type...\n");
-      opencl_assert(clGetDeviceInfo(device_ids[platform],
+      opencl_assert(clGetDeviceInfo(device_id,
                                     CL_DEVICE_TYPE,
                                     sizeof(cl_device_type),
                                     &device_type,
@@ -114,7 +122,7 @@ int main(int argc, char **argv) {
       opencl_assert(clGetDeviceInfo(device_id,
                                     CL_DEVICE_NAME,
                                     sizeof(name),
-                                    &name,
+                                    name,
                                     NULL));
       LOG("Device name is: %s\n", name);
     }
